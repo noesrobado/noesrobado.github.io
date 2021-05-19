@@ -1,3 +1,8 @@
+:root {
+  --text-color: #222;
+  --primary-color: tomato;
+}
+
 *,
 *::before,
 *::after {
@@ -10,4 +15,17 @@ body {
   margin: 0;
   padding: 0;
   min-height: 100vh;
+  color: var(--text-color);
+}
+
+.material-icons {
+  color: inherit;
+}
+
+.btn.material-icons {
+  transition: color 0.3s ease-in-out;
+  cursor: pointer;
+}
+.btn.material-icons:hover {
+  color: var(--primary-color);
 }
