@@ -10,7 +10,7 @@ export const Login: React.FC = () => {
 
   useEffect(() => {
     if (user) history.push('/')
-  }, [user])
+  }, [history, user])
 
   const handleLogin = () => {
     signInWithGoogle()
