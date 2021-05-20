@@ -1,65 +1,32 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
-// Interfaces
-interface iProduct {
-  type:
-    | 'Teléfono'
-    | 'Bicicleta'
-    | 'Cámara de Fotos'
-    | 'Objetivo'
-    | 'Motocicleta'
-    | 'Computadora'
-    | 'Otro'
-  serial: string | null
-  description: string
-  buyDate: Date
-  brand?: string
-  model?: string
-}
+// Instances
+import { iProduct } from '../../Interfaces/iDatabase'
 
-const initialProducts: iProduct[] = [
-  {
-    type: 'Cámara de Fotos',
-    buyDate: new Date(),
-    description: 'Cámara sin objetivo, no funciona el flash integrado',
-    serial: '2068316',
-    brand: 'Nikon',
-    model: 'D3200',
-  },
-  {
-    type: 'Computadora',
-    buyDate: new Date(),
-    description: 'Notebook Dell i3',
-    serial: 'RRhh2068316',
-    brand: 'Dell',
-  },
-  {
-    type: 'Teléfono',
-    buyDate: new Date(),
-    description: 'Color negro',
-    serial: '206833899816',
-    brand: 'Xiaomi',
-    model: 'Mi 9T',
-  },
-]
+// Hooks
+import { useAuth } from '../../Hooks/useAuth'
+import { useProducts } from '../../Hooks/useProducts'
 
 export const MyProducts: React.FC = () => {
-  const [products] = useState(initialProducts)
+  const [products, setProducts] = useState<iProduct[] | null>(null)
+  const { user } = useAuth()
+  const { getUserProducts } = useProducts()
+
+  useEffect(() => {
+    if (!!user && !!user.email) setProducts(getUserProducts(user.email))
+  }, [getUserProducts, user])
+
   return (
     <div>
-      <p>Mis Productos</p>
-      {!!products.length && (
-        <ul>
-          {products.map((item, index) => (
-            <li
-              key={index}
-              title={`Propietario desde ${item.buyDate.toLocaleDateString()}`}
-            >
+      Mis Productos
+      <ul>
+        {!!products &&
+          products.map(item => (
+            <li key={item.id}>
               {item.type} {item.brand} {item.model}
             </li>
           ))}
-        </ul>
-      )}
+      </ul>
     </div>
   )
 }
