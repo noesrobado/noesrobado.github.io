@@ -17,20 +17,22 @@ export type iProductType =
   | 'Accesorio Fotográfico'
   | 'Bicicleta'
 
-export type iProductState = 'Normal' | 'En la basura' | 'Denunciado'
+export type iProductState =
+  | 'Normal'
+  | 'En la basura'
+  | 'Denunciado'
+  | 'Registrado'
 
 export interface iTransactions {
   date: Date
   type: iTransactionsType
   from: iUser
-  to: iUser
+  to?: iUser
 }
 
-export interface iTransactionsType {
-  type: 'Sale' | 'Gift' | 'Transference'
-}
+export type iTransactionsType = 'Sale' | 'Gift' | 'Transference'
 
 export interface iUser {
   email: string
-  name: string
+  registerDate: Date
 }
