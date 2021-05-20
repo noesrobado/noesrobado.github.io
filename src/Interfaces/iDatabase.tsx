@@ -1,4 +1,4 @@
-export interface iProducts {
+export interface iProduct {
   id: string
   type: iProductType
   state: iProductState
@@ -7,6 +7,7 @@ export interface iProducts {
   description?: string
   transactions: iTransactions[]
   pictures?: string[]
+  owner: iUser
 }
 
 export type iProductType =
