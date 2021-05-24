@@ -4,9 +4,9 @@ No es robado es una plataforma en la que podes registrar los productos que compr
 
 Esto es útil para cuando alguien se decida a comprar un producto usado, un teléfono, una bicicleta o una notebook por ejemplo, pueda consultar si el vendedor es el dueño del producto, y desde cuando lo es, y si tuvo otros dueños anteriores. 
 
-El sistema busca generar una traza del producto que garantize la genuina procedencia del mismo, en lo posible desde la tienda o fabricante, hasta el fin de su vida útil. 
+El sistema busca generar una traza del producto que garantice la genuina procedencia del mismo, en lo posible desde la tienda o fabricante, hasta el fin de su vida útil. 
 
-Como funciona el sistema: un producto es cargado al sistema por una tienda, fabricante o por su primer dueño. Cuando es vendido, se transfere de un propietario a otro y esa operación queda registrada en el historial del producto. 
+Como funciona el sistema: un producto es cargado al sistema por una tienda, fabricante o por su primer dueño. Cuando es vendido, se transfiera de un propietario a otro y esa operación queda registrada en el historial del producto. 
 
 Cualquier persona con el número de serie o identificador único del producto puede ver la taza completa del producto. 
 
