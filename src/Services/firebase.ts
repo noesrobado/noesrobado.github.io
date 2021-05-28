@@ -16,7 +16,18 @@ const firebaseConfig = {
   appId: process.env.REACT_APP_APP_ID,
   measurementId: process.env.REACT_APP_MEASUREMENT_ID
 };
-export const firebaseApp = initializeApp(firebaseConfig);
+
+var firebaseConfig2 = {
+  apiKey: "AIzaSyCaBB95IOyfGTCuRnLFrtg3KQiL4myiGA4",
+  authDomain: "noesrobado-app.firebaseapp.com",
+  databaseURL: "https://noesrobado-app-default-rtdb.firebaseio.com",
+  projectId: "noesrobado-app",
+  storageBucket: "noesrobado-app.appspot.com",
+  messagingSenderId: "96848561278",
+  appId: "1:96848561278:web:1173f14988816e4573442f",
+  measurementId: "G-Y31PM071CX"
+};
+export const firebaseApp = initializeApp(firebaseConfig2);
 export const db = getFirestore();
 
 
