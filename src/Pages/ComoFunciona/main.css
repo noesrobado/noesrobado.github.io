@@ -1,0 +1,11 @@
+.como-funciona {
+  min-height: 100vh;
+  flex-grow: 2;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 7em auto;
+}
+
+.como-funciona--bottom {
+  padding: 2em 1em;
+}

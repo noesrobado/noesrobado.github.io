@@ -1,4 +1,3 @@
-import React, { createContext, useContext } from 'react'
 import { useState } from 'react'
 import {
   getAuth,
@@ -11,24 +10,10 @@ import {
 
 const auth = getAuth()
 auth.languageCode = 'es'
+
 const provider = new GoogleAuthProvider()
 
-interface iCtx {
-  user: User | null
-  signInWithGoogle: Function
-  signOut: Function
-}
-const ctx: iCtx = {
-  user: null,
-  signInWithGoogle() {},
-  signOut() {},
-}
-
-const Context = createContext(ctx)
-
-export const useAuth = () => useContext(Context)
-
-export const AuthProviders = ({ children }: { children: React.ReactNode }) => {
+export const useAuth = () => {
   const [user, setUser] = useState<User | null>(null)
 
   const signInWithGoogle = async () => {
@@ -52,9 +37,5 @@ export const AuthProviders = ({ children }: { children: React.ReactNode }) => {
     }
   })
 
-  return (
-    <Context.Provider value={{ user, signInWithGoogle, signOut }}>
-      {children}
-    </Context.Provider>
-  )
+  return { user, signInWithGoogle, signOut }
 }

@@ -5,20 +5,43 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import './Services/firebase'
 
 // Styles
-import './index.css'
+import './main.css'
+import './helpers.css'
+
+// Providers
+import { AuthProviders } from './Hooks/useAuth'
+import { ProductsProvider } from './Hooks/useProducts'
 
 // Components
-import { Home } from './Components/Home/Home'
-import { Login } from './Components/Login/Login'
+import { Home } from './Pages/Home/Home'
+import { Productos } from './Pages/Productos/Productos'
+import { Nuevo } from './Pages/Productos/Nuevo/Nuevo'
+import { Detalles } from './Pages/Productos/Detalles/Detalles'
+import { Transferir } from './Pages/Productos/Transferir/Transferir'
+import { ComoFunciona } from './Pages/ComoFunciona/ComoFunciona'
+import { Login } from './Pages/Login/Login'
 
 ReactDOM.render(
   <React.StrictMode>
-    <Router>
-      <Switch>
-        <Route exact path="/" component={Home} />
-        <Route exact path="/login" component={Login} />
-      </Switch>
-    </Router>
+    <AuthProviders>
+      <ProductsProvider>
+        <Router>
+          <Switch>
+            <Route exact path="/" component={Home} />
+            <Route exact path="/productos/nuevo" component={Nuevo} />
+            <Route
+              exact
+              path="/productos/transferir/:id"
+              component={Transferir}
+            />
+            <Route exact path="/productos/" component={Productos} />
+            <Route exact path="/producto/:id" component={Detalles} />
+            <Route exact path="/como-funciona/" component={ComoFunciona} />
+            <Route exact path="/login" component={Login} />
+          </Switch>
+        </Router>
+      </ProductsProvider>
+    </AuthProviders>
   </React.StrictMode>,
   document.getElementById('root')
 )

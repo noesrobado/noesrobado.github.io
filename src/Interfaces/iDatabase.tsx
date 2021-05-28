@@ -1,37 +1,40 @@
 export interface iProduct {
+  docID?: string
   id: string
   type: iProductType
   state: iProductState
   brand: string
   model: string
   description?: string
-  transactions: iTransactions[]
+  transactions?: iTransactions[]
   pictures?: string[]
-  owner: iUser
+  owner: string
+  dates: {
+    created: Date
+    updated: Date
+  }
 }
 
 export type iProductType =
   | 'Teléfono Movil'
-  | 'Tablet'
   | 'Notebook'
   | 'Cámara de Fotos'
-  | 'Accesorio Fotográfico'
   | 'Bicicleta'
 
-export type iProductState =
-  | 'Normal'
-  | 'En la basura'
-  | 'Denunciado'
-  | 'Registrado'
+export type iProductState = 'Normal' | 'Desechado' | 'Denunciado' | 'Registrado'
 
 export interface iTransactions {
   date: Date
   type: iTransactionsType
-  from: iUser
-  to?: iUser
+  from: string
+  to?: string
 }
 
-export type iTransactionsType = 'Sale' | 'Gift' | 'Transference'
+export type iTransactionsType =
+  | 'Venta'
+  | 'Regalo'
+  | 'Transferencia'
+  | 'Registro'
 
 export interface iUser {
   email: string

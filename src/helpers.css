@@ -1,0 +1,44 @@
+/* helpers */
+.left {
+  -moz-text-align-last: left;
+  text-align-last: left;
+}
+
+.right {
+  text-align: right;
+}
+
+.center {
+  text-align: center;
+}
+
+.flex-center {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.upper {
+  text-transform: uppercase;
+}
+
+.bold {
+  font-weight: bold;
+}
+
+.bg-primary {
+  color: white;
+  background-color: var(--color-primary);
+}
+
+.box-shadow {
+  box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.9),
+    inset 0 0 15px 1px rgba(0, 0, 0, 0.4);
+}
+
+.border-radius-top {
+  border-radius: 1.5em 1.5em 0 0;
+}
+.border-radius-bottom {
+  border-radius: 0 0 1.5em 1.5em;
+}

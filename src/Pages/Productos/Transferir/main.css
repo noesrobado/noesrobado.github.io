@@ -1,0 +1,8 @@
+.product-transfer-bottom {
+  display: grid;
+  place-content: baseline;
+}
+
+.product-transfer-bottom > input {
+  height: 2em;
+}

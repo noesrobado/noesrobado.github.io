@@ -1,0 +1,19 @@
+.product-details--top {
+  min-height: 4em;
+}
+
+label {
+  margin: 10px 0;
+}
+
+select {
+  height: 2.5em;
+  font-size: 1em;
+}
+textarea {
+  height: 10em;
+}
+
+button {
+  margin: 1em;
+}

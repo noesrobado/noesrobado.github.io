@@ -1,0 +1,179 @@
+:root {
+  --color-primary: #11493e;
+  --color-secondary: #808080;
+  --color-danger: darkred;
+  --color-dark: #191919;
+  --color-light: #cecece;
+}
+*,
+*::before*::after {
+  box-sizing: border-box;
+  font-family: inherit;
+}
+
+/* Material icons */
+.material-icons,
+.material-icons-outlined {
+  font-family: 'Material Icons';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px; /* Preferred icon size */
+  display: inline-block;
+  line-height: 1;
+  text-transform: none;
+  letter-spacing: normal;
+  word-wrap: normal;
+  white-space: nowrap;
+  direction: ltr;
+
+  /* Support for all WebKit browsers. */
+  -webkit-font-smoothing: antialiased;
+  /* Support for Safari and Chrome. */
+  text-rendering: optimizeLegibility;
+
+  /* Support for Firefox. */
+  -moz-osx-font-smoothing: grayscale;
+
+  /* Support for IE. */
+  font-feature-settings: 'liga';
+}
+.material-icons.md-18,
+.material-icons-outlined.md-18 {
+  font-size: 18px;
+}
+.material-icons.md-24,
+.material-icons-outlined.md-24 {
+  font-size: 24px;
+}
+.material-icons.md-36,
+.material-icons-outlined.md-36 {
+  font-size: 36px;
+}
+.material-icons.md-48,
+.material-icons-outlined.md-48 {
+  font-size: 48px;
+}
+
+html,
+body {
+  font-family: system-ui;
+  text-align: center;
+  margin: 0;
+  height: 100vh;
+  background-color: var(--color-light);
+  color: var(--color-dark);
+}
+
+a,
+a:link,
+a:visited {
+  color: inherit;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+a.icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1em;
+}
+
+/* General styles */
+#root {
+  min-height: 100vh;
+  background-color: white;
+}
+#root > main {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+#root > main > div:nth-child(2) {
+  padding: 1em;
+  flex-grow: 2;
+}
+
+main > footer {
+  padding: 1em;
+}
+
+/* components */
+button {
+  cursor: pointer;
+  background: inherit;
+  color: inherit;
+  border: 1px solid;
+  outline: 0;
+  border-radius: 6px;
+  padding: 0 1em;
+  min-height: 40px;
+  font-size: 1em;
+}
+
+button:hover {
+  -webkit-filter: brightness(1.3);
+  filter: brightness(1.3);
+}
+
+button.outlined {
+  border: 0;
+}
+button.outlined.bolder {
+  font-weight: bold;
+}
+button.danger {
+  background-color: darkred;
+  color: white;
+}
+
+button.successful {
+  background-color: darkgreen;
+  color: white;
+}
+
+button.icon {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  line-height: 3;
+}
+
+.display-info-container {
+  display: flex;
+  justify-content: space-around;
+}
+.display-info-item-light {
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  background-color: white;
+  color: var(--color-primary);
+  width: 90px;
+  height: 80px;
+  padding: 5px;
+  border-radius: 1em;
+}
+.display-info-item-dark {
+  color: white;
+  background-color: var(--color-primary);
+}
+.display-info-item-light > span:nth-child(1) {
+  font-size: 40px;
+}
+.display-info-item-light > span:nth-child(2) {
+  font-weight: bold;
+}

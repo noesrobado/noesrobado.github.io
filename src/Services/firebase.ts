@@ -1,5 +1,7 @@
 import dotenv from 'dotenv'
 import { initializeApp } from 'firebase/app';
+import { getFirestore } from "firebase/firestore"
+
 
 dotenv.config()
 
@@ -15,5 +17,7 @@ const firebaseConfig = {
   measurementId: process.env.REACT_APP_MEASUREMENT_ID
 };
 export const firebaseApp = initializeApp(firebaseConfig);
+export const db = getFirestore();
+
 
 
