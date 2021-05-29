@@ -9,7 +9,7 @@ import { iProduct } from '../../../Interfaces/iDatabase'
 
 // Hooks
 import { useProducts } from '../../../Hooks/useProducts'
-import { useAuth } from '../../../Hooks/useAuth-'
+import { useAuth } from '../../../Hooks/useAuth'
 
 export const Transferir: React.FC = () => {
   const { user } = useAuth()

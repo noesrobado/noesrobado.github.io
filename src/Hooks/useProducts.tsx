@@ -1,9 +1,10 @@
 import { useEffect, useState, createContext, useContext } from 'react'
-import { useHistory } from 'react-router-dom'
 import {
   addDoc,
   collection,
+  CollectionReference,
   doc,
+  DocumentData,
   getDocs,
   query,
   updateDoc,
@@ -17,18 +18,18 @@ import { iProduct, iProductType } from '../Interfaces/iDatabase'
 // Hook
 import { useAuth } from './useAuth'
 
-interface ctx {
+interface initialPropsTypes {
   products: iProduct[]
   updateProduct: Function
   addProduct: Function
 }
 
-const initialProps: ctx = {
+const initialProps: initialPropsTypes = {
   products: [],
   updateProduct() {},
   addProduct() {},
 }
-const Context = createContext<ctx>(initialProps)
+const Context = createContext<typeof initialProps>(initialProps)
 Context.displayName = 'Products of user'
 
 export const useProducts = () => useContext(Context)
@@ -39,7 +40,6 @@ export const ProductsProvider = ({
   children: React.ReactNode
 }) => {
   const dbName = 'products'
-  const history = useHistory()
   const [products, setProducts] = useState<iProduct[]>([])
   const { user } = useAuth()
 
@@ -67,7 +67,7 @@ export const ProductsProvider = ({
   /**
    * Add new product
    */
-  const addProduct = async ({
+  const addProduct = ({
     id,
     type,
     brand,
@@ -98,12 +98,10 @@ export const ProductsProvider = ({
     // Production Mode
 
     try {
-      const docRef = await addDoc(collection(db, dbName), newProduct)
-      console.log(`Document added with id: ${docRef.id}`)
-
-      // Update state
-      setProducts([newProduct, ...products])
-      history.push('/')
+      const result = addDocument(collection(db, dbName), newProduct)
+      result.then(doc =>
+        setProducts([{ ...newProduct, docID: doc.id }, ...products])
+      )
     } catch (e) {
       console.error('Error adding document: ', e)
     }
@@ -151,4 +149,12 @@ export interface iRegisterProduct {
   brand: string
   model: string
   description?: string
+}
+
+const addDocument = async (
+  collection: CollectionReference<DocumentData>,
+  data: DocumentData
+) => {
+  console.info('Document written with ID')
+  return await addDoc(collection, data)
 }

@@ -5,9 +5,10 @@ import { Link, useHistory } from 'react-router-dom'
 import './main.css'
 
 // Interfaces
-import { iRegisterProduct, useProducts } from '../../../Hooks/useProducts'
+import { useProducts } from '../../../Hooks/useProducts'
+import { iProduct } from '../../../Interfaces/iDatabase'
 
-const initialFormData: iRegisterProduct = {
+const initialFormData: Partial<iProduct> = {
   id: '',
   type: 'Bicicleta',
   brand: '',
@@ -37,7 +38,7 @@ export const Nuevo = () => {
     event.preventDefault()
     if (!event.currentTarget.checkValidity()) return false
     addProduct({ ...formData })
-    history.push('/productos')
+    history.push('/productos/')
     return true
   }
 
