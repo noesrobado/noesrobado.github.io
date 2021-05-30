@@ -78,7 +78,7 @@ export const Detalles: React.FC = () => {
         <div>
           {!!product?.transactions &&
             product.transactions.map((item, index) => (
-              <p key={index}>
+              <p key={index} title={`Fecha: ${item.date.toLocaleString()}`}>
                 {`
                 ${item.type}: 
                 ${formatDistance(new Date(item.date), new Date(), {
