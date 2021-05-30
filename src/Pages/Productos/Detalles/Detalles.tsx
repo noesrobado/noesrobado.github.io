@@ -9,6 +9,8 @@ import { iProduct, iProductState } from '../../../Interfaces/iDatabase'
 
 // Hooks
 import { useProducts } from '../../../Hooks/useProducts'
+import { formatDistance } from 'date-fns'
+import { es } from 'date-fns/locale'
 
 export const Detalles: React.FC = () => {
   const history = useHistory()
@@ -77,11 +79,17 @@ export const Detalles: React.FC = () => {
           {!!product?.transactions &&
             product.transactions.map((item, index) => (
               <p key={index}>
-                {item.date.toLocaleDateString()} - {item.type}
+                {`
+                ${item.type}: 
+                ${formatDistance(new Date(item.date), new Date(), {
+                  addSuffix: true,
+                  locale: es,
+                })}
+                `}
                 <br />
-                <q>
+                <small>
                   {item.to ? ` ${item.from} → ${item.to}` : ` ${item.from}`}
-                </q>
+                </small>
               </p>
             ))}
         </div>

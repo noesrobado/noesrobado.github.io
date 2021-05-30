@@ -1,3 +1,6 @@
+import { formatDistance } from 'date-fns'
+import { es } from 'date-fns/locale'
+
 // Hooks
 import { useProducts } from '../../Hooks/useProducts'
 import { Link } from 'react-router-dom'
@@ -49,6 +52,14 @@ export const ProductsList: React.FC<iProps> = ({
           <li
             key={item.id}
             className={`${item.state.toLocaleLowerCase()} box-shadow---NO`}
+            title={`Propietario desde ${formatDistance(
+              item.dates.created,
+              new Date(),
+              {
+                addSuffix: true,
+                locale: es,
+              }
+            )}\nNúmero de série: ${item.id}`}
             style={{
               margin: '1.5em 0',
               letterSpacing: 2,
