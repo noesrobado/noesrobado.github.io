@@ -1,16 +1,7 @@
 import { useEffect, useState, createContext, useContext } from 'react'
-import {
-  addDoc,
-  collection,
-  CollectionReference,
-  doc,
-  DocumentData,
-  getDocs,
-  query,
-  updateDoc,
-  where,
-} from 'firebase/firestore'
-import { db } from '../Services/firebase'
+import { getDocs, query, Timestamp, where } from 'firebase/firestore'
+import { updateProducts, addNewProduct, productDB } from '../Services/firebase'
+import { timestampToDate } from '../Services/firebase'
 
 // Interfaces
 import { iProduct, iProductType } from '../Interfaces/iDatabase'
@@ -39,30 +30,47 @@ export const ProductsProvider = ({
 }: {
   children: React.ReactNode
 }) => {
-  const dbName = 'products'
   const [products, setProducts] = useState<iProduct[]>([])
-  const { user } = useAuth()
+  const { user, setCanCreate } = useAuth()
 
   useEffect(() => {
+    if (!user || !user.email) return
     const getProducts = async () => {
-      if (!user || !user.email) return
-      const data: iProduct[] = []
-      const productsRef = collection(db, dbName)
-      const q = query(productsRef, where('owner', '==', user.email))
-      const querySnapshot = await getDocs(q)
-      querySnapshot.forEach(doc => {
-        const item = doc.data() as iProduct
-        console.log(doc)
+      let data: iProduct[] = []
 
-        item.docID = doc.id
-        //@ts-expect-error
-        item.transactions?.map(t => (t.date = t.date.toDate()))
+      const q = query(productDB, where('owner', '==', user.email))
+      const querySnapshot = await getDocs<iProduct>(q)
+
+      querySnapshot.forEach(doc => {
+        const item: iProduct = {
+          docID: doc.id,
+          ...doc.data(),
+          dates: {
+            created: timestampToDate(
+              doc.data().dates.created as unknown as Timestamp
+            ),
+            updated: timestampToDate(
+              doc.data().dates.updated as unknown as Timestamp
+            ),
+          },
+        }
+        item.transactions?.map(
+          trans =>
+            (trans.date = timestampToDate(trans.date as unknown as Timestamp))
+        )
+        // Check if user can create new products
+        const dateDiff = (+new Date() - +item.dates.created) / 24 / 60 / 60000
+        if (dateDiff < 2) setCanCreate(false)
+
         data.push(item)
       })
+      // Sort by created date
+      data.sort((a, b) => a.dates.created.getTime() - b.dates.created.getTime())
+
       setProducts(data)
     }
     getProducts()
-  }, [user])
+  }, [user, setCanCreate])
 
   /**
    * Add new product
@@ -95,15 +103,13 @@ export const ProductsProvider = ({
       },
     }
 
-    // Production Mode
-
     try {
-      const result = addDocument(collection(db, dbName), newProduct)
+      const result = addNewProduct(newProduct)
       result.then(doc =>
         setProducts([{ ...newProduct, docID: doc.id }, ...products])
       )
-    } catch (e) {
-      console.error('Error adding document: ', e)
+    } catch (error) {
+      console.error('Error adding document: ', error)
     }
   }
 
@@ -111,7 +117,7 @@ export const ProductsProvider = ({
     products.filter(item => item.docID === id)[0]
 
   /**
-   * Update description of product
+   * Update product
    */
   const updateProduct = async (
     id: string,
@@ -123,12 +129,13 @@ export const ProductsProvider = ({
 
     try {
       // Save Product
+      updateProducts(id, data)
       setProducts(items => [
         newItem,
         ...items.filter(item => item.docID !== id),
       ])
-      const docRef = doc(db, dbName, `${newItem.docID}`)
-      await updateDoc(docRef, { ...data })
+      // const docRef = doc(db, dbName, `${newItem.docID}`)
+      // await updateDoc(docRef, { ...data })
     } catch (error) {
       console.error(error)
       return false
@@ -149,12 +156,4 @@ export interface iRegisterProduct {
   brand: string
   model: string
   description?: string
-}
-
-const addDocument = async (
-  collection: CollectionReference<DocumentData>,
-  data: DocumentData
-) => {
-  console.info('Document written with ID')
-  return await addDoc(collection, data)
 }

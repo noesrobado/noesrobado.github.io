@@ -17,11 +17,15 @@ interface iCtx {
   user: User | null
   signInWithGoogle: Function
   signOut: Function
+  canCreate: boolean
+  setCanCreate: React.Dispatch<React.SetStateAction<boolean>>
 }
 const ctx: iCtx = {
   user: null,
   signInWithGoogle() {},
   signOut() {},
+  canCreate: false,
+  setCanCreate() {},
 }
 
 const Context = createContext(ctx)
@@ -29,6 +33,7 @@ const Context = createContext(ctx)
 export const useAuth = () => useContext(Context)
 
 export const AuthProviders = ({ children }: { children: React.ReactNode }) => {
+  const [canCreate, setCanCreate] = useState(true)
   const [user, setUser] = useState<User | null>(null)
 
   const signInWithGoogle = async () => {
@@ -53,7 +58,9 @@ export const AuthProviders = ({ children }: { children: React.ReactNode }) => {
   })
 
   return (
-    <Context.Provider value={{ user, signInWithGoogle, signOut }}>
+    <Context.Provider
+      value={{ user, signInWithGoogle, signOut, canCreate, setCanCreate }}
+    >
       {children}
     </Context.Provider>
   )

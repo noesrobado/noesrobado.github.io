@@ -16,7 +16,7 @@ export interface iProduct {
 }
 
 export type iProductType =
-  | 'Teléfono Movil'
+  | 'Teléfono Móvil'
   | 'Notebook'
   | 'Cámara de Fotos'
   | 'Bicicleta'

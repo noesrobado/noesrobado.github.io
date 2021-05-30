@@ -1,21 +1,6 @@
-import dotenv from 'dotenv'
 import { initializeApp } from 'firebase/app';
-import { getFirestore } from "firebase/firestore"
-
-
-dotenv.config()
-
-// Initialize Firebase
-// const firebaseConfig = {
-//   apiKey: process.env.REACT_APP_API_KEY,
-//   authDomain: process.env.REACT_APP_AUTH_DOMAIN,
-//   databaseURL: process.env.REACT_APP_DATABASE_URL,
-//   projectId: process.env.REACT_APP_PROJECT_ID,
-//   storageBucket: process.env.REACT_APP_STORAGE_BUCKET,
-//   messagingSenderId: process.env.REACT_APP_MESSAGING_SENDER_ID,
-//   appId: process.env.REACT_APP_APP_ID,
-//   measurementId: process.env.REACT_APP_MEASUREMENT_ID
-// };
+import { addDoc, collection, doc, DocumentData, getFirestore, Timestamp, updateDoc } from "firebase/firestore"
+import { iProduct } from '../Interfaces/iDatabase';
 
 var firebaseConfig = {
   apiKey: "AIzaSyCaBB95IOyfGTCuRnLFrtg3KQiL4myiGA4",
@@ -30,5 +15,21 @@ var firebaseConfig = {
 export const firebaseApp = initializeApp(firebaseConfig);
 export const db = getFirestore();
 
+export const productDB = collection(db, 'products')
 
+export const addNewProduct = async (
+  data: DocumentData
+) =>
+  await addDoc(productDB, data)
+
+
+export const updateProducts = async (id: string, updateData: Partial<iProduct>) => {
+  const docRef = doc(db, 'products', id)
+  await updateDoc(docRef, updateData)
+}
+
+export const timestampToDate = (timestamp: Timestamp | Date): Date => {
+  const date = timestamp as Timestamp
+  return date.toDate()
+}
 

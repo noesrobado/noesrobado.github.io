@@ -1,3 +1,4 @@
+import { appConf } from '../../../appConf'
 import { useState } from 'react'
 import { Link, useHistory } from 'react-router-dom'
 
@@ -7,6 +8,7 @@ import './main.css'
 // Interfaces
 import { useProducts } from '../../../Hooks/useProducts'
 import { iProduct } from '../../../Interfaces/iDatabase'
+import { useAuth } from '../../../Hooks/useAuth'
 
 const initialFormData: Partial<iProduct> = {
   id: '',
@@ -16,9 +18,11 @@ const initialFormData: Partial<iProduct> = {
   description: '',
 }
 export const Nuevo = () => {
+  const { canCreate } = useAuth()
   const history = useHistory()
-  const { addProduct } = useProducts()
+  const { products, addProduct } = useProducts()
   const [formData, setFormData] = useState(initialFormData)
+  const ids = products.map(item => item.id)
 
   const handleFormChanges = (
     event: React.ChangeEvent<
@@ -26,6 +30,10 @@ export const Nuevo = () => {
     >
   ) => {
     const { name, value } = event.currentTarget
+    if (name === 'id' && ids.includes(value))
+      event.currentTarget.setCustomValidity(appConf.product.errorProductIdExist)
+    else event.currentTarget.setCustomValidity('')
+
     setFormData(state => ({
       ...state,
       [name]: value,
@@ -36,7 +44,7 @@ export const Nuevo = () => {
     event: React.FormEvent<HTMLFormElement>
   ): boolean => {
     event.preventDefault()
-    if (!event.currentTarget.checkValidity()) return false
+
     addProduct({ ...formData })
     history.push('/productos/')
     return true
@@ -49,10 +57,7 @@ export const Nuevo = () => {
       </div>
 
       <div className="productos--bottom">
-        <form
-          // onChange={event => handleFormChanges(event)}
-          onSubmit={event => handleFormSubmit(event)}
-        >
+        <form onSubmit={event => handleFormSubmit(event)}>
           <fieldset>
             <label htmlFor="type">Tipo de producto</label>
             <select
@@ -61,7 +66,7 @@ export const Nuevo = () => {
               name="type"
               id="type"
             >
-              <option value="Teléfono Movil">Teléfono Movil</option>
+              <option value="Teléfono Móvil">Teléfono Móvil</option>
               <option value="Notebook">Notebook</option>
               <option value="Cámara de Fotos">Cámara de Fotos</option>
               <option value="Bicicleta">Bicicleta</option>
@@ -106,9 +111,14 @@ export const Nuevo = () => {
               name="description"
               id="description"
             ></textarea>
-            <button type="submit" className="danger">
+            <button type="submit" className="danger" disabled={!canCreate}>
               Registrar Producto
             </button>
+            {!canCreate && (
+              <div style={{ color: 'darkred' }}>
+                <small>{appConf.user.cantCreateProductMessage}</small>
+              </div>
+            )}
           </fieldset>
         </form>
       </div>
