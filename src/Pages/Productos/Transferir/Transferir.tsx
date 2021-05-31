@@ -30,7 +30,11 @@ export const Transferir: React.FC = () => {
 
   useEffect(() => {
     const { owner, ownerConfirm, accept } = inputState
-    if (accept.toLocaleLowerCase() === 'confirmar' && owner === ownerConfirm) {
+    if (
+      accept.toLocaleLowerCase() === 'confirmar' &&
+      !!owner &&
+      owner === ownerConfirm
+    ) {
       setIsValid(true)
     }
   }, [inputState])

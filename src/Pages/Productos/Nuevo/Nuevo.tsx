@@ -1,6 +1,8 @@
-import { appConf } from '../../../appConf'
 import { useState } from 'react'
 import { Link, useHistory } from 'react-router-dom'
+
+// Data
+import { appConf } from '../../../appConf'
 
 // Styles
 import './main.css'
@@ -18,6 +20,7 @@ const initialFormData: Partial<iProduct> = {
   description: '',
 }
 export const Nuevo = () => {
+  const productsTypes = appConf.product.types
   const { canCreate } = useAuth()
   const history = useHistory()
   const { products, addProduct } = useProducts()
@@ -66,10 +69,11 @@ export const Nuevo = () => {
               name="type"
               id="type"
             >
-              <option value="Teléfono Móvil">Teléfono Móvil</option>
-              <option value="Notebook">Notebook</option>
-              <option value="Cámara de Fotos">Cámara de Fotos</option>
-              <option value="Bicicleta">Bicicleta</option>
+              {productsTypes.sort().map(item => (
+                <option key={item} value={item}>
+                  {item}
+                </option>
+              ))}
             </select>
 
             <label htmlFor="brand">Marca o fabricante</label>
@@ -103,7 +107,8 @@ export const Nuevo = () => {
             />
 
             <label htmlFor="description">
-              Descripción que ayuda a identificar el producto
+              Descripción que ayude a identificar el producto o aporte
+              información de interés
             </label>
             <textarea
               value={formData.description}
