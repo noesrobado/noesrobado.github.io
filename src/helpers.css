@@ -54,6 +54,10 @@ span.success {
   color: darkgreen;
 }
 
+.btn {
+  cursor: pointer;
+}
+
 /* Buttons */
 button.outlined {
   border: 0;
