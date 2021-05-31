@@ -7,6 +7,14 @@ export const appConf: iConf = {
   product: {
     errorProductIdExist:
       'El número de série ingresado ya ha sido usado en otro producto',
+    types: [
+      'Teléfono Móvil',
+      'Notebook',
+      'Cámara de Fotos',
+      'Bicicleta',
+      'Artículo Fotográfico',
+      'Electrodomésticos',
+    ],
   },
   transactions: {
     types: ['Venta', 'Regalo', 'Transferencia', 'Registro'],
@@ -19,6 +27,7 @@ interface iConf {
   }
   product: {
     errorProductIdExist: string
+    types: string[]
   }
   transactions: {
     types: iTransactionsType[]
