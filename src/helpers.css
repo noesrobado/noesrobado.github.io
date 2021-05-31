@@ -42,3 +42,39 @@
 .border-radius-bottom {
   border-radius: 0 0 1.5em 1.5em;
 }
+
+/* Texts */
+p.danger,
+span.danger {
+  color: var(--color-danger);
+}
+
+p.success,
+span.success {
+  color: darkgreen;
+}
+
+/* Buttons */
+button.outlined {
+  border: 0;
+}
+button.outlined.bolder {
+  font-weight: bold;
+}
+
+button.danger {
+  background-color: darkred;
+  color: white;
+}
+
+button.successful {
+  background-color: darkgreen;
+  color: white;
+}
+
+button.icon {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
