@@ -36,9 +36,11 @@ export const Home: React.FC = () => {
             </div>
           </div>
           <div className="home--bottom--center">
+{!!user && 
             <button onClick={() => go.push('/productos/')}>
               {!!user ? 'Ver mis productos' : 'Crear una cuenta'}
             </button>
+}
             <p>
               Registrá tus productos para generar una traza que ayude a
               verificar la procedencia genuina.
