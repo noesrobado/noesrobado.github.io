@@ -42,10 +42,10 @@ export const ProductsProvider = ({
 
   useEffect(() => {
     // Check if user can create new products
-    products.forEach(item => {
-      const dateDiff = (+new Date() - +item.dates.created) / 24 / 60 / 60000
-      if (dateDiff < 2) setCanCreate(false)
-    })
+    const twoDayAgo = products.filter(
+      item => (+new Date() - +item.dates.created) / 24 / 60 / 60000 < 2
+    )
+    if (twoDayAgo.length >= 2) setCanCreate(false)
   }, [products, setCanCreate])
 
   useEffect(() => {
