@@ -3,11 +3,3 @@
   border-radius: 30px;
   padding: 2em;
 }
-
-.productos--bottom fieldset input,
-.productos--bottom fieldset select,
-.productos--bottom fieldset textarea {
-  min-height: 2em;
-  background-color: inherit;
-  border: 1px solid var(--color-light);
-}
