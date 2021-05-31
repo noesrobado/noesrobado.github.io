@@ -6,7 +6,6 @@ import { timestampToDate } from '../Services/firebase'
 // Interfaces
 import {
   iProduct,
-  iProductType,
   iTransactions,
   iTransactionsType,
 } from '../Interfaces/iDatabase'
@@ -202,7 +201,7 @@ export const ProductsProvider = ({
 
 export interface iRegisterProduct {
   id: string
-  type: iProductType
+  type: string
   brand: string
   model: string
   description?: string

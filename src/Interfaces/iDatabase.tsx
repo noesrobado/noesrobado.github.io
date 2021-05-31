@@ -1,7 +1,7 @@
 export interface iProduct {
   docID?: string
   id: string
-  type: iProductType
+  type: string
   state: iProductState
   brand: string
   model: string
@@ -14,12 +14,6 @@ export interface iProduct {
     updated: Date
   }
 }
-
-export type iProductType =
-  | 'Teléfono Móvil'
-  | 'Notebook'
-  | 'Cámara de Fotos'
-  | 'Bicicleta'
 
 export type iProductState = 'Normal' | 'Desechado' | 'Denunciado' | 'Registrado'
 
@@ -36,7 +30,13 @@ export type iTransactionsType =
   | 'Transferencia'
   | 'Registro'
 
-export interface iUser {
-  email: string
-  registerDate: Date
-}
+// export interface iUser {
+//   email: string
+//   registerDate: Date
+// }
+
+// export type iProductType =
+//   | 'Teléfono Móvil'
+//   | 'Notebook'
+//   | 'Cámara de Fotos'
+//   | 'Bicicleta'
