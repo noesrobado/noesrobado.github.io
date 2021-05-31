@@ -4,7 +4,12 @@ import { updateProducts, addNewProduct, productDB } from '../Services/firebase'
 import { timestampToDate } from '../Services/firebase'
 
 // Interfaces
-import { iProduct, iProductType } from '../Interfaces/iDatabase'
+import {
+  iProduct,
+  iProductType,
+  iTransactions,
+  iTransactionsType,
+} from '../Interfaces/iDatabase'
 
 // Hook
 import { useAuth } from './useAuth'
@@ -13,12 +18,14 @@ interface initialPropsTypes {
   products: iProduct[]
   updateProduct: Function
   addProduct: Function
+  addTransactions: Function
 }
 
 const initialProps: initialPropsTypes = {
   products: [],
   updateProduct() {},
   addProduct() {},
+  addTransactions() {},
 }
 const Context = createContext<typeof initialProps>(initialProps)
 Context.displayName = 'Products of user'
@@ -143,8 +150,46 @@ export const ProductsProvider = ({
     return true
   }
 
+  /**
+   * addTransactions
+   */
+  const addTransactions = (
+    docId: string,
+    type: iTransactionsType,
+    to: string
+  ) => {
+    const date = new Date()
+    const from = user!.email!
+
+    const newTransaction: iTransactions = {
+      date,
+      from,
+      to,
+      type,
+    }
+    const pro = products.filter(item => item.docID === docId)[0]
+    const modifiedPro: iProduct = {
+      ...pro,
+      dates: {
+        ...pro.dates,
+        updated: new Date(),
+      },
+      owner: to,
+      transactions: [newTransaction, ...pro.transactions!],
+    }
+    console.log(
+      docId,
+      products.filter(item => item.docID !== docId)
+    )
+
+    setProducts(prev => prev.filter(item => item.docID !== docId))
+    updateProducts(docId, { ...modifiedPro })
+  }
+
   return (
-    <Context.Provider value={{ products, updateProduct, addProduct }}>
+    <Context.Provider
+      value={{ products, updateProduct, addProduct, addTransactions }}
+    >
       {children}
     </Context.Provider>
   )

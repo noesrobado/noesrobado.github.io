@@ -25,7 +25,11 @@ export const addNewProduct = async (
 
 export const updateProducts = async (id: string, updateData: Partial<iProduct>) => {
   const docRef = doc(db, 'products', id)
-  await updateDoc(docRef, updateData)
+  const data = {
+    ...updateData,
+    'dates.updated': new Date(),
+  }
+  await updateDoc(docRef, data)
 }
 
 export const timestampToDate = (timestamp: Timestamp | Date): Date => {

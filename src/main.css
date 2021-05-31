@@ -35,6 +35,7 @@
   -moz-osx-font-smoothing: grayscale;
 
   /* Support for IE. */
+  -webkit-font-feature-settings: 'liga';
   font-feature-settings: 'liga';
 }
 .material-icons.md-18,
@@ -155,6 +156,15 @@ ul {
   padding: 0;
   list-style: none;
   line-height: 3;
+}
+
+input,
+select {
+  background-color: inherit;
+  border: 1px solid grey;
+  border-radius: 6px;
+  min-height: 40px;
+  padding: 0 5px;
 }
 
 .display-info-container {

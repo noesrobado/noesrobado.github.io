@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from 'react'
-import { Link, useParams } from 'react-router-dom'
+import { Link, useHistory, useParams } from 'react-router-dom'
+
+// Config
+import { appConf } from '../../../appConf'
 
 // Styles
 import './main.css'
@@ -12,10 +15,25 @@ import { useProducts } from '../../../Hooks/useProducts'
 import { useAuth } from '../../../Hooks/useAuth'
 
 export const Transferir: React.FC = () => {
+  const history = useHistory()
+  const [isValid, setIsValid] = useState(false)
+  const [inputState, setInputState] = useState({
+    owner: '',
+    ownerConfirm: '',
+    accept: '',
+    transactionType: 'Venta',
+  })
   const { user } = useAuth()
   const [product, setProduct] = useState<iProduct | null>(null)
-  const { products } = useProducts()
+  const { products, addTransactions } = useProducts()
   let { id } = useParams<{ id: string }>()
+
+  useEffect(() => {
+    const { owner, ownerConfirm, accept } = inputState
+    if (accept.toLocaleLowerCase() === 'confirmar' && owner === ownerConfirm) {
+      setIsValid(true)
+    }
+  }, [inputState])
 
   useEffect(() => {
     if (!!products) {
@@ -24,10 +42,10 @@ export const Transferir: React.FC = () => {
     }
   }, [id, products])
 
-  // const updateProductDB = async () => {
-  //   await updateProduct(product!.docID, { ...product })
-  //   setUnsaved(false)
-  // }
+  const handleConfirm = () => {
+    addTransactions(id, inputState.transactionType, inputState.owner)
+    history.push('/productos/')
+  }
 
   return (
     <main className="product-transfer">
@@ -37,27 +55,61 @@ export const Transferir: React.FC = () => {
       <div className="product-transfer-bottom">
         <h4>
           {product?.type} {product?.brand} {product?.model}
+          <br />
+          Propiedad de {user?.displayName}
         </h4>
-        <p>
-          <b>Propiedad de:</b> {user?.displayName}
-        </p>
+
+        <label htmlFor="transactionType">Tipo de transacción</label>
+        <select
+          name="transactionType"
+          id="transactionType"
+          value={inputState.transactionType}
+          onChange={evt =>
+            setInputState({
+              ...inputState,
+              [evt.target.name]: evt.target.value,
+            })
+          }
+        >
+          {appConf.transactions.types
+            .filter(item => item !== 'Registro')
+            .map(item => (
+              <option value={item} key={item}>
+                {item}
+              </option>
+            ))}
+        </select>
 
         <label htmlFor="owner">Transferir a:</label>
-
         <input
+          required
+          value={inputState.owner}
           type="email"
           name="owner"
           id="owner"
           placeholder="Email del destinatario"
+          onChange={evt =>
+            setInputState({
+              ...inputState,
+              [evt.target.name]: evt.target.value,
+            })
+          }
         />
 
         <label htmlFor="ownerConfirmation">Confirma el email</label>
-        <br />
         <input
+          required
+          value={inputState.ownerConfirm}
           type="email"
-          name="ownerConfirmation"
+          name="ownerConfirm"
           id="ownerConfirmation"
           placeholder="Confirme email del destinatario"
+          onChange={evt =>
+            setInputState({
+              ...inputState,
+              [evt.target.name]: evt.target.value,
+            })
+          }
         />
 
         <p style={{ color: 'darkred' }}>
@@ -66,14 +118,31 @@ export const Transferir: React.FC = () => {
 
         <label htmlFor="accepted">
           Para confirmar, escriba:
-          <b> aceptar</b>
+          <b> confirmar</b>
         </label>
         <input
+          value={inputState.accept}
           type="text"
-          name="accepted"
+          name="accept"
           id="accepted"
-          placeholder="Para confirmar, escriba: aceptar"
+          style={{
+            textTransform: 'lowercase',
+            textAlign: 'center',
+            color: 'darkred',
+            fontWeight: 'bold',
+          }}
+          onChange={evt =>
+            setInputState({
+              ...inputState,
+              [evt.target.name]: evt.target.value,
+            })
+          }
         />
+        {isValid && (
+          <button className="danger upper" onClick={() => handleConfirm()}>
+            Realizar Transferencia
+          </button>
+        )}
       </div>
 
       <footer className="bg-primary left upper">
