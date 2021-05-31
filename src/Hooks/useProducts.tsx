@@ -41,6 +41,14 @@ export const ProductsProvider = ({
   const { user, setCanCreate } = useAuth()
 
   useEffect(() => {
+    // Check if user can create new products
+    products.forEach(item => {
+      const dateDiff = (+new Date() - +item.dates.created) / 24 / 60 / 60000
+      if (dateDiff < 2) setCanCreate(false)
+    })
+  }, [products, setCanCreate])
+
+  useEffect(() => {
     if (!user || !user.email) return
     const getProducts = async () => {
       let data: iProduct[] = []
@@ -65,9 +73,6 @@ export const ProductsProvider = ({
           trans =>
             (trans.date = timestampToDate(trans.date as unknown as Timestamp))
         )
-        // Check if user can create new products
-        const dateDiff = (+new Date() - +item.dates.created) / 24 / 60 / 60000
-        if (dateDiff < 2) setCanCreate(false)
 
         data.push(item)
       })
