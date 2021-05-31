@@ -7,9 +7,9 @@ export const Footer = () => {
 
   const toggleAuth = () => (!!user ? signOut() : signInWithGoogle())
   return (
-    <footer className="bg-primary flex-center">
+    <footer className="bg-primary" style={{ gap: '1em' }}>
       <Link to="/" onClick={() => toggleAuth()} className="upper">
-        {!!user ? 'cerrar sesión' : 'ingresar'}
+        {!!user ? user.displayName : 'ingresar'}
       </Link>
     </footer>
   )

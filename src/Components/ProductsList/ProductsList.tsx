@@ -68,17 +68,9 @@ export const ProductsList: React.FC<iProps> = ({
           >
             <Link
               to={'/producto/' + item.docID}
-              className="icon"
-              style={{
-                justifyContent: 'space-between',
-                padding: '0 1em',
-                ...itemSates[item.state].style,
-              }}
+              style={{ ...itemSates[item.state].style }}
             >
               {item.type} {item.brand} {item.model}
-              <span className="material-icons-outlined md-18">
-                {itemSates[item.state].icon}
-              </span>
             </Link>
           </li>
         ))}

@@ -13,7 +13,7 @@ import { Link, useHistory } from 'react-router-dom'
 
 export const Home: React.FC = () => {
   const go = useHistory()
-  const { user } = useAuth()
+  const { user, signInWithGoogle } = useAuth()
   return (
     <>
       <main className="home">
@@ -36,9 +36,13 @@ export const Home: React.FC = () => {
             </div>
           </div>
           <div className="home--bottom--center">
-            {!!user && (
+            {!!user ? (
               <button onClick={() => go.push('/productos/')}>
-                {!!user ? 'Ver mis productos' : 'Crear una cuenta'}
+                Ver mis productos'
+              </button>
+            ) : (
+              <button onClick={() => signInWithGoogle()}>
+                Registrar mis productos
               </button>
             )}
             <p>
@@ -48,17 +52,23 @@ export const Home: React.FC = () => {
           </div>
           <div className="home--bottom--bottom">
             <div className="display-info-container">
-              <div className="display-info-item-light">
+              <div className="display-info-item-light" title="Usuarios activos">
                 <span className="material-icons-outlined">face</span>
                 <span>12.000+</span>
               </div>
 
-              <div className="display-info-item-light">
+              <div
+                className="display-info-item-light"
+                title="Productos registrados"
+              >
                 <span className="material-icons-outlined">directions_bike</span>
                 <span>40.000+</span>
               </div>
 
-              <div className="display-info-item-light">
+              <div
+                className="display-info-item-light"
+                title="Consultas de estado"
+              >
                 <span className="material-icons-outlined">person_search</span>
                 <span>2.000+</span>
               </div>

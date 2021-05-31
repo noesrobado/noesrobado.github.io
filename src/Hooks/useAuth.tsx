@@ -10,7 +10,7 @@ import {
 } from 'firebase/auth'
 
 const auth = getAuth()
-auth.languageCode = 'es'
+// auth.languageCode = 'es'
 const provider = new GoogleAuthProvider()
 
 interface iCtx {
@@ -39,13 +39,10 @@ export const AuthProviders = ({ children }: { children: React.ReactNode }) => {
   const signInWithGoogle = async () => {
     const response = await signInWithRedirect(auth, provider)
     setUser(response)
-    console.log(response)
   }
 
   const signOut = () => {
-    singOutFromProvider(auth)
-      .then(() => console.log('User logout !'))
-      .catch(error => console.error(error))
+    singOutFromProvider(auth).catch(error => console.error(error))
   }
 
   onAuthStateChanged(auth, user => {
@@ -53,7 +50,6 @@ export const AuthProviders = ({ children }: { children: React.ReactNode }) => {
       setUser(user)
     } else {
       setUser(null)
-      console.log('User Logout!')
     }
   })
 

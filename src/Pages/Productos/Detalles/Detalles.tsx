@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Link, useHistory, useParams } from 'react-router-dom'
+import { addDays, isAfter } from 'date-fns'
 
 // Styles
 import './main.css'
@@ -14,6 +15,7 @@ import { es } from 'date-fns/locale'
 
 export const Detalles: React.FC = () => {
   const history = useHistory()
+  const [validKey, setValidKey] = useState(false)
   const [unsaved, setUnsaved] = useState(false)
   const [product, setProduct] = useState<iProduct | null>(null)
   const { products, updateProduct } = useProducts()
@@ -21,8 +23,11 @@ export const Detalles: React.FC = () => {
 
   useEffect(() => {
     if (!!products) {
-      const selectProduct = products.filter(item => item.docID === id)[0] || []
-      setProduct(selectProduct)
+      const item = products.filter(item => item.docID === id)[0] || []
+      if (!!item.publicKeyExpiration) {
+        setValidKey(!isExpiredDate(item.publicKeyExpiration))
+      }
+      setProduct(item)
     }
   }, [id, products])
 
@@ -44,6 +49,19 @@ export const Detalles: React.FC = () => {
     await updateProduct(product!.docID, { state })
     setProduct({ ...product!, state })
   }
+
+  const createShareKey = async () => {
+    const today = new Date()
+    const expiration = addDays(today, 2)
+    const data: Partial<iProduct> = {
+      publicKey: Date.now(),
+      publicKeyExpiration: expiration,
+    }
+    await updateProduct(product!.docID, { ...data })
+    setProduct({ ...product!, ...data })
+  }
+
+  const isExpiredDate = (date: Date): boolean => isAfter(new Date(), date)
 
   return (
     <main className="product-details">
@@ -74,6 +92,34 @@ export const Detalles: React.FC = () => {
             <b>N° de Serie: </b>
             {product?.id}
           </p>
+          {validKey ? (
+            <p>
+              <b>Llave pública:</b>
+
+              <div
+                style={{ display: 'flex', justifyContent: 'center', gap: 16 }}
+              >
+                <span
+                  className="success btn"
+                  title="Compartir con otra persona, ésta podrá ver información de este producto."
+                >
+                  {product?.publicKey}
+                </span>
+                <span
+                  className="material-icons md-18 btn danger"
+                  onClick={() => createShareKey()}
+                >
+                  refresh
+                </span>
+              </div>
+            </p>
+          ) : (
+            <p>
+              <button onClick={() => createShareKey()}>
+                Generar llave pública
+              </button>
+            </p>
+          )}
         </div>
         <div>
           {!!product?.transactions &&

@@ -1,6 +1,8 @@
 export interface iProduct {
-  docID?: string
-  id: string
+  readonly docID?: string
+  readonly id: string
+  publicKey?: number
+  publicKeyExpiration?: Date
   type: string
   state: iProductState
   brand: string
