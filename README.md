@@ -1,9 +1,8 @@
-
 # No es rodado
 
 No es robado es una plataforma en la que podrás registrar los productos que compras o que ya tienes.
 
-Esto sreá muy útil para quienes se decidan a comprar productos usados cómo un teléfono, bicicletaa o notebook's por ejemplo. 
+Esto será muy útil para quienes se decidan a comprar productos usados cómo un teléfono, bicicleta o notebook's por ejemplo.
 
 De ésta manera, el posible comprador puede consultar desde cuando vendedor es el dueño del producto en venta, conociendo la fecha en el que lo registró por primera vez, además de saber si tuvo otros dueños anteriores.
 
@@ -17,7 +16,6 @@ Cualquier vendedor puede enviarle el código de seguimiento a sus posibles clien
 
 El sistema es libre y gratuito para los usuarios, y solo se registrará el email de los, garantizando la privacidad de todos los usuarios del sistema.
 
-
 ## FAQ
 
 #### ¿Puedo registrar otros productos además de los mencionados?
@@ -28,15 +26,13 @@ Si, a menudo habilitamos la posibilidad de registrar otros tipos de productos.
 
 Puedes marcar el producto cómo denunciado en el sistema.
 
-  
 ## Tech Stack
 
 **Client:** React, Vanilla CSS
 
 **Server:** Firebase
 
-  
-## Installation 
+## Installation
 
 Install my-project with npm
 
@@ -45,9 +41,7 @@ Install my-project with npm
   cd noesrobado.github.io
   npm i
 ```
-    
+
 ## Colaboradores
 
 - [Germán Aliprandi](https://github.com/galiprandi/)
-
-  
