@@ -1,15 +1,53 @@
-## No es rodado
 
-No es robado es una plataforma en la que podes registrar los productos que compras con sus datos, números de série y características distintivas.
+# No es rodado
 
-Esto es útil para quienes se deciden a comprar productos usados cómo un teléfono, una bicicleta o una notebook por ejemplo. Así el potencial comprador puede consultar si el vendedor es el dueño légìtimo del producto teniendo en cuenta la fecha en el que lo registró por primera vez, también saber si tuvo otros dueños anteriores y detalles del mismo.
+No es robado es una plataforma en la que podrás registrar los productos que compras o que ya tienes.
+
+Esto sreá muy útil para quienes se decidan a comprar productos usados cómo un teléfono, bicicletaa o notebook's por ejemplo. 
+
+De ésta manera, el posible comprador puede consultar desde cuando vendedor es el dueño del producto en venta, conociendo la fecha en el que lo registró por primera vez, además de saber si tuvo otros dueños anteriores.
 
 El sistema busca generar una traza de los productos que facilite verificar la genuina procedencia de los mismos, iniciando desde la tienda o fabricante del producto, hasta el fin de su vida útil.
 
-Como funciona el sistema: Un producto es registrado al sistema por una tienda, fabricante o por su primer dueño. Cuando es vendido, se transfiere la propiedad del mismo de un propietario a otro, y esa operación queda registrada en el historial del producto.
+Como funciona el sistema: El producto es registrado en el sistema por una tienda, fabricante o por su primer dueño. Cuando es vendido, se transfiere la propiedad del mismo de un propietario a otro, y esa operación queda registrada en el historial del producto.
 
-Un vendedor puede enviarle el código de seguimiento a los posibles compradores y estos podrán ver la traza completa del producto. Esto ayuda a saber desde cuando el vender es propietario del producto ya que ningún producto puede ser registrado en más de una ocasión.
+Cualquier vendedor puede enviarle el código de seguimiento a sus posibles clientes y estos podrán ver la traza completa del producto. Esto ayuda a conocer desde cuando el vendedor es propietario del producto.
 
-> Esta registro es muy útil para evitar comprar productos de dudosa procedencia.
+#### Este registro es muy útil para evitar comprar productos de dudosa procedencia.
 
-El sistema será libre y gratuito para los usuarios, y se registrará sólo el email de los usuarios, garantizando la privacidad de los mismos.
+El sistema es libre y gratuito para los usuarios, y solo se registrará el email de los, garantizando la privacidad de todos los usuarios del sistema.
+
+
+## FAQ
+
+#### ¿Puedo registrar otros productos además de los mencionados?
+
+Si, a menudo habilitamos la posibilidad de registrar otros tipos de productos.
+
+#### ¿Qué sucede si me roban un producto?
+
+Puedes marcar el producto cómo denunciado en el sistema.
+
+  
+## Tech Stack
+
+**Client:** React, Vanilla CSS
+
+**Server:** Firebase
+
+  
+## Installation 
+
+Install my-project with npm
+
+```bash
+  git clone git@github.com:noesrobado/noesrobado.github.io.git
+  cd noesrobado.github.io
+  npm i
+```
+    
+## Colaboradores
+
+- [Germán Aliprandi](https://github.com/galiprandi/)
+
+  
