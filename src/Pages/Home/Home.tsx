@@ -38,7 +38,7 @@ export const Home: React.FC = () => {
           <div className="home--bottom--center">
             {!!user ? (
               <button onClick={() => go.push('/productos/')}>
-                Ver mis productos'
+                Ver mis productos
               </button>
             ) : (
               <button onClick={() => signInWithGoogle()}>

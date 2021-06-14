@@ -145,7 +145,7 @@ export const Detalles: React.FC = () => {
             onChange={evt => handleDescriptionChanges(evt)}
             name="description"
             id="description"
-            value={product?.description}
+            value={product?.description || ''}
             rows={10}
           ></textarea>
           {unsaved && (
