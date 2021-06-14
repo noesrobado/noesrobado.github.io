@@ -1,0 +1,5 @@
+.product-consultas-bottom {
+  display: grid;
+  place-content: baseline;
+  margin: auto;
+}

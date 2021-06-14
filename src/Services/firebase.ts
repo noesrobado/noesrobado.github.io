@@ -1,5 +1,5 @@
 import { initializeApp } from 'firebase/app';
-import { addDoc, collection, doc, DocumentData, getFirestore, Timestamp, updateDoc } from "firebase/firestore"
+import { addDoc, collection, doc, DocumentData, getFirestore, Timestamp, updateDoc, where, query, getDocs } from "firebase/firestore"
 import { iProduct } from '../Interfaces/iDatabase';
 
 var firebaseConfig = {
@@ -37,3 +37,31 @@ export const timestampToDate = (timestamp: Timestamp | Date): Date => {
   return date.toDate()
 }
 
+export const getProductByKey = async (key: number) => {
+  console.log('Searching for key: ' + key);
+  let product: iProduct | null = null
+  const q = query(productDB, where("publicKey", "==", key))
+  const querySnapshot = await getDocs<iProduct>(q);
+  querySnapshot.forEach((doc) => {
+    const item: iProduct = {
+      docID: doc.id,
+      ...doc.data(),
+      publicKeyExpiration: timestampToDate(doc.data().publicKeyExpiration as unknown as Timestamp),
+      dates: {
+        created: timestampToDate(
+          doc.data().dates.created as unknown as Timestamp
+        ),
+        updated: timestampToDate(
+          doc.data().dates.updated as unknown as Timestamp
+        ),
+      },
+    }
+    item.transactions?.map(
+      trans =>
+        (trans.date = timestampToDate(trans.date as unknown as Timestamp))
+    )
+    if (timestampToDate(doc.data().publicKeyExpiration as unknown as Timestamp) > new Date)
+      product = item
+  })
+  return product
+}
